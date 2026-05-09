@@ -1,0 +1,62 @@
+nombres = [
+    "Ana",
+    "Carlos",
+    "María",
+    "David",
+    "Lucía"
+]
+print("Ejercicio 1: Nombres de compañeros")
+for nombre in nombres:
+    print(nombre)
+print()
+
+notas = []
+print("Ejercicio 2: Ingrese 7 notas")
+for i in range(7):
+    while True:
+        entrada = input(f"Nota {i + 1}: ")
+        try:
+            nota = float(entrada)
+            notas.append(nota)
+            break
+        except ValueError:
+            print("Entrada inválida. Por favor, ingrese un número.")
+
+nota_mayor = max(notas)
+nota_menor = min(notas)
+promedio = sum(notas) / len(notas)
+print(f"Nota mayor: {nota_mayor}")
+print(f"Nota menor: {nota_menor}")
+print(f"Promedio de notas: {promedio:.2f}")
+print()
+
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print("Ejercicio 3: Vector original de 10 números")
+print(numeros)
+numeros[4] = 99  
+print("Vector actualizado después de cambiar el quinto elemento por 99")
+print(numeros)
+print()
+
+edades = []
+print("Ejercicio 4: Ingrese 5 edades")
+for i in range(5):
+    while True:
+        entrada = input(f"Edad {i + 1}: ")
+        try:
+            edad = int(entrada)
+            edades.append(edad)
+            break
+        except ValueError:
+            print("Entrada inválida. Por favor, ingrese un número entero.")
+
+mayores_o_iguales = [edad for edad in edades if edad >= 18]
+print("Edades mayores o iguales a 18 años:")
+for edad in mayores_o_iguales:
+    print(edad)
+print()
+
+print("Ejercicio 5: Vector de nombres después de eliminar el tercer nombre")
+if len(nombres) >= 3:
+    del nombres[2]
+print(nombres)
