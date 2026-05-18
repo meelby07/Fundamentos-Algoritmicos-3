@@ -59,4 +59,4 @@ print()
 print("Ejercicio 5: Vector de nombres después de eliminar el tercer nombre")
 if len(nombres) >= 3:
     del nombres[2]
-print(nombres)
+print(nombres) 

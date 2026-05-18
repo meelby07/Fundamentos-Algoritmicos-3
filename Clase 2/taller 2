@@ -1,0 +1,180 @@
+import math
+
+def menu():
+    """
+    Función principal que actúa como cadena para seleccionar 
+    qué ejercicio del taller mostrar[cite: 4, 9].
+    """
+    while True:
+        print("\n" + "="*40)
+        print("   MENÚ TALLER 2: VECTORES Y MATRICES")
+        print("="*40)
+        print("1. Ejercicio 4: Manejo de Vectores (15 elementos)")
+        print("2. Ejercicio 5: Matriz de Notas Estudiantes")
+        print("3. Ejercicio 6: Suma de Diagonales y Triángulo Superior")
+        print("4. Ejercicio 7: Inventario de Productos (6 meses)")
+        print("5. Ejercicio 8: Matriz en Orden Serpiente")
+        print("6. Ejercicio 9: Reto Sudoku 3x3")
+        print("0. Salir")
+        
+        opcion = input("\nSeleccione el número de ejercicio a ejecutar: ")
+
+        if opcion == "1":
+            ejercicio_vectores()
+        elif opcion == "2":
+            matriz_notas()
+        elif opcion == "3":
+            recorrido_avanzado_cuadrada()
+        elif opcion == "4":
+            inventario_productos()
+        elif opcion == "5":
+            matriz_serpiente()
+        elif opcion == "6":
+            reto_sudoku()
+        elif opcion == "0":
+            print("Cerrando el programa...")
+            break
+        else:
+            print("Opción no válida. Intente de nuevo.")
+
+def ejercicio_vectores():
+    """Crea, analiza y permite modificar un vector de 15 enteros[cite: 17, 18]."""
+    vector = []
+    print("\n--- Cargando Vector de 15 elementos ---")
+    for i in range(15):
+        dato = int(input(f"Ingrese valor para la posición {i}: "))
+        vector.append(dato)
+    
+    print(f"\nVector original: {vector}")
+    mayor = max(vector)
+    menor = min(vector)
+    print(f"Mayor valor: {mayor} (Posición {vector.index(mayor)})")
+    print(f"Menor valor: {menor} (Posición {vector.index(menor)})")
+    print(f"Promedio: {sum(vector)/len(vector):.2f}")
+    
+    pos = int(input("\nIngrese la posición que desea modificar (0-14): "))
+    nuevo_valor = int(input("Ingrese el nuevo valor: "))
+    vector[pos] = nuevo_valor
+    print(f"Vector actualizado: {vector}")
+
+def matriz_notas():
+    """Gestiona una matriz de notas por estudiante[cite: 27, 28]."""
+    n_estudiantes = int(input("\n¿Cuántos estudiantes son?: "))
+    n_notas = int(input("¿Cuántas notas tiene cada uno?: "))
+    
+    matriz = []
+    for i in range(n_estudiantes):
+        fila_notas = []
+        print(f"Notas para Estudiante {i+1}:")
+        for j in range(n_notas):
+            nota = float(input(f"  Nota {j+1}: "))
+            fila_notas.append(nota)
+        matriz.append(fila_notas)
+    
+    mejor_promedio = -1
+    estudiante_top = 0
+    
+    print("\nResultados:")
+    for idx, notas in enumerate(matriz):
+        prom = sum(notas)/len(notas)
+        print(f"Estudiante {idx}: Notas {notas} | Promedio: {prom:.2f}")
+        if prom > mejor_promedio:
+            mejor_promedio = prom
+            estudiante_top = idx
+            
+    print(f"\nEl estudiante con mayor promedio es el índice {estudiante_top} con {mejor_promedio:.2f}")
+
+def recorrido_avanzado_cuadrada():
+    """Suma diagonales y muestra elementos sobre la principal[cite: 33, 34]."""
+    n = int(input("\nIngrese el tamaño N de la matriz cuadrada: "))
+    matriz = []
+    
+    for i in range(n):
+        fila = [int(input(f"Valor en [{i}][{j}]: ")) for j in range(n)]
+        matriz.append(fila)
+        
+    suma_principal = sum(matriz[i][i] for i in range(n))
+    suma_secundaria = sum(matriz[i][n - 1 - i] for i in range(n))
+    
+    print(f"\nSuma Diagonal Principal: {suma_principal}")
+    print(f"Suma Diagonal Secundaria: {suma_secundaria}")
+    print("Elementos por encima de la diagonal principal:")
+    for i in range(n):
+        for j in range(n):
+            if j > i:
+                print(matriz[i][j], end=" ")
+    print()
+
+def inventario_productos():
+    """Usa vectores y matrices para control de inventario[cite: 41, 42]."""
+    cant = int(input("\n¿Cuántos productos registrará?: "))
+    nombres = []
+    inventario = []
+    
+    for i in range(cant):
+        nombres.append(input(f"Nombre del producto {i+1}: "))
+        print(f"Ingrese inventario mensual (últimos 6 meses) para {nombres[-1]}:")
+        mensual = [int(input(f"  Mes {m+1}: ")) for m in range(6)]
+        inventario.append(mensual)
+    
+    promedios = [sum(fil)/6 for fil in inventario]
+    print(f"\nProducto Mayor Stock Promedio: {nombres[promedios.index(max(promedios))]}")
+    print(f"Producto Menor Stock Promedio: {nombres[promedios.index(min(promedios))]}")
+    
+    total_piezas = sum(sum(fila) for fila in inventario)
+    print(f"Inventario total de todos los productos y meses: {total_piezas}")
+    
+    # Consulta por nombre [cite: 46]
+    busqueda = input("\nIngrese nombre del producto a consultar: ")
+    if busqueda in nombres:
+        idx = nombres.index(busqueda)
+        print(f"Inventario total de {busqueda} en 6 meses: {sum(inventario[idx])}")
+    else:
+        print("Producto no encontrado.")
+
+def matriz_serpiente():
+    """Genera matriz N x N en orden zig-zag[cite: 47, 48, 49]."""
+    n = int(input("\nIngrese N (debe ser >= 6): "))
+    if n < 6:
+        print("Ajustando N a 6 por requerimiento...")
+        n = 6
+    
+    matriz = [[0]*n for _ in range(n)]
+    valor = 1
+    
+    for i in range(n):
+        if i % 2 == 0: 
+            for j in range(n):
+                matriz[i][j] = valor
+                valor += 1
+        else:
+            for j in range(n-1, -1, -1):
+                matriz[i][j] = valor
+                valor += 1
+                
+    print("\nMatriz Serpiente:") 
+    for fila in matriz:
+        for elemento in fila:
+            print(f"{elemento:3}", end=" ")
+        print()
+
+def reto_sudoku():
+    """Valida una cuadrícula de 3x3 para Sudoku[cite: 53, 54]."""
+    print("\nLlene la matriz 3x3 con números del 1 al 9:")
+    cuadricula = []
+    for i in range(3):
+        cuadricula.append([int(input(f"Fila {i+1} Col {j+1}: ")) for j in range(3)])
+    
+    flat_list = [num for fila in cuadricula for num in fila]
+    repetidos = set([x for x in flat_list if flat_list.count(x) > 1])
+    faltantes = [n for n in range(1, 10) if n not in flat_list]
+    
+    if not repetidos and not faltantes:
+        print("\nResultado: ¡Es una cuadrícula de Sudoku válida!")
+    else:
+        print("\nResultado: Cuadrícula INVÁLIDA.")
+        if repetidos: print(f"Números repetidos: {list(repetidos)}")
+        if faltantes: print(f"Números faltantes: {faltantes}")
+
+if __name__ == "__main__":
+    menu()
